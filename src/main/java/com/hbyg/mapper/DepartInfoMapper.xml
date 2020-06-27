@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hbyg.dao.DepartInfoMapper">
+  <resultMap id="BaseResultMap" type="com.hbyg.pojo.DepartInfo">
+    <id column="DEP_ID" jdbcType="INTEGER" property="depId" />
+    <result column="DEP_NAME" jdbcType="VARCHAR" property="depName" />
+    <result column="DEP_DESC" jdbcType="VARCHAR" property="depDesc" />
+    <result column="DEP_STATE" jdbcType="VARCHAR" property="depState" />
+  </resultMap>
+  
+  <!--public List<DepartInfo> getAll();  -->
+  <select id="getAll" resultMap="BaseResultMap">
+  SELECT * FROM depart_info
+  </select>
+  
+  <!-- void insertBatch(List<DepartInfo> list); -->
+  <insert id="insertBatch">
+  INSERT INTO  depart_info(DEP_NAME,DEP_DESC,DEP_STATE) 
+  VALUES
+  <foreach collection="teachers" separator="," item="te">
+  (#{te.depName},#{te.depDesc},#{te.depState})
+  </foreach>
+  </insert>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from depart_info
+    where DEP_ID = #{depId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hbyg.pojo.DepartInfo">
+    insert into depart_info (DEP_ID, DEP_NAME, DEP_DESC, 
+      DEP_STATE)
+    values (#{depId,jdbcType=INTEGER}, #{depName,jdbcType=VARCHAR}, #{depDesc,jdbcType=VARCHAR}, 
+      #{depState,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.hbyg.pojo.DepartInfo">
+    update depart_info
+    set DEP_NAME = #{depName,jdbcType=VARCHAR},
+      DEP_DESC = #{depDesc,jdbcType=VARCHAR},
+      DEP_STATE = #{depState,jdbcType=VARCHAR}
+    where DEP_ID = #{depId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select DEP_ID, DEP_NAME, DEP_DESC, DEP_STATE
+    from depart_info
+    where DEP_ID = #{depId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select DEP_ID, DEP_NAME, DEP_DESC, DEP_STATE
+    from depart_info
+  </select>
+</mapper>

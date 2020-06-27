@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hbyg.dao.UserInfoMapper">
+  <resultMap id="BaseResultMap" type="com.hbyg.pojo.UserInfo">
+    <id column="USER_ID" jdbcType="INTEGER" property="userId" />
+    <result column="DEP_ID" jdbcType="INTEGER" property="depId" />
+    <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
+    <result column="USER_SEX" jdbcType="VARCHAR" property="userSex" />
+    <result column="USER_STATE" jdbcType="VARCHAR" property="userState" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user_info
+    where USER_ID = #{userId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.hbyg.pojo.UserInfo">
+    insert into user_info (USER_ID, DEP_ID, USER_NAME, 
+      USER_SEX, USER_STATE)
+    values (#{userId,jdbcType=INTEGER}, #{depId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, 
+      #{userSex,jdbcType=VARCHAR}, #{userState,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.hbyg.pojo.UserInfo">
+    update user_info
+    set DEP_ID = #{depId,jdbcType=INTEGER},
+      USER_NAME = #{userName,jdbcType=VARCHAR},
+      USER_SEX = #{userSex,jdbcType=VARCHAR},
+      USER_STATE = #{userState,jdbcType=VARCHAR}
+    where USER_ID = #{userId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select USER_ID, DEP_ID, USER_NAME, USER_SEX, USER_STATE
+    from user_info
+    where USER_ID = #{userId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select USER_ID, DEP_ID, USER_NAME, USER_SEX, USER_STATE
+    from user_info
+  </select>
+</mapper>
